@@ -1,0 +1,71 @@
+import tkinter as tk
+from time import strftime
+
+# Create the main window for the clock
+root = tk.Tk()
+root.title("Digital Clock")
+root.geometry("600x300")  # Set the window size
+root.configure(bg="black")  # Set background color of the window
+
+# Function to update the time every second
+def time():
+    current_time = strftime('%H:%M:%S %p')  # Format current time (24-hour with AM/PM)
+    label.config(text=current_time)  # Update the label text
+    label.after(1000, time)  # Call this function again after 1000ms (1 second)
+
+# Function to update the date every second
+def date():
+    current_date = strftime('%A, %B %d, %Y')  # Format current date
+    date_label.config(text=current_date)  # Update the date label
+    date_label.after(1000, date)  # Refresh the date every second
+
+# Function to change the color of the clock when clicked
+def change_color(event):
+    colors = ["red", "blue", "green", "yellow", "orange", "purple", "pink", "white"]
+    current_color = label.cget("foreground")
+    new_color = colors[(colors.index(current_color) + 1) % len(colors)]  # Cycle through colors
+    label.config(foreground=new_color)
+
+# Function to toggle 12/24 hour format
+def toggle_format(event):
+    global is_24_hour
+    is_24_hour = not is_24_hour  # Toggle between 24-hour and 12-hour format
+    time()
+
+# Create a label widget to display the time
+label = tk.Label(root, font=("calibri", 60, 'bold'), background="black", foreground="white")
+label.pack(anchor='center')  # Center the label in the window
+
+# Create a label widget to display the date below the clock
+date_label = tk.Label(root, font=("calibri", 20), background="black", foreground="white")
+date_label.pack(pady=10)  # Add space between the clock and date
+
+# Bind a mouse click event to change the text color
+root.bind("<Button-1>", change_color)
+
+# Bind a key press event to toggle between 12/24-hour format
+root.bind("<t>", toggle_format)
+
+# Create a title label with instructions
+title_label = tk.Label(root, text="Click to Change Color, Press 'T' to Toggle Time Format",
+                       font=("calibri", 12), bg="black", fg="white")
+title_label.pack(pady=5)
+
+# Set the initial time format (24-hour format)
+is_24_hour = True
+
+# Function to update the time format based on the selected format
+def time():
+    if is_24_hour:
+        current_time = strftime('%H:%M:%S')  # 24-hour format
+    else:
+        current_time = strftime('%I:%M:%S %p')  # 12-hour format with AM/PM
+    label.config(text=current_time)  # Update the label with current time
+    label.after(1000, time)  # Update every second
+
+# Start the clock and date functions
+time()
+date()
+
+# Run the Tkinter event loop
+root.mainloop()
