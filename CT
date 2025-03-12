@@ -2,19 +2,19 @@
 
 from turtle import *
 import colorsys
-
-speed(0)
-bgcolor("black")
-h = 0
-for i in range(16):
+# Set up screen and turtle
+speed(0) # Set the turtle's speed to the fastest
+bgcolor("black") # Set background color to black
+h = 0 # Initialize hue for colors
+for i in range(16): # Inner loop to draw individual shapes
     for j in range(18):
-        c = colorsys.hsv_to_rgb(h, 1, 1)
-        color(c)
-        h += 0.005
-        rt(90)
-        circle(150 - j * 6, 90)
-        lt(90)
-        circle(150 - j * 6, 90)
-        rt(180)
-    circle(40, 24)
+        c = colorsys.hsv_to_rgb(h, 1, 1) # Convert HSV color to RGB
+        color(c) # Set the turtle color
+        h += 0.005 # Increment hue for color transition
+        rt(90) # Rotate turtle right by 90 degrees
+        circle(150 - j * 6, 90) # Draw a quarter-circle with decreasing radius
+        lt(90) # Rotate  turtle left by 90 degrees
+        circle(150 - j * 6, 90) # Draw another quarter-circle
+        rt(180) # Rotate turtle 180 degrees to change direction
+    circle(40, 24) # Draw a smaller central cicle
 done()
